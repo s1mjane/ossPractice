@@ -49,14 +49,19 @@ void saveData(Product p[], int count){
 
 //파일에서 데이터 불러오는 함수
 int loadData(Product *p){
-	int count=0;
-	FILE*fp;
-
-	//파일 내용을 읽어와서 배열에 값 추가하기
-
-
-
-
-	printf("=> 로딩 성공!\n");
-	return count;
+        int count = 0; // 이따 리턴하기 위한 변수 선언
+        FILE *fp; // 파일 포인터
+        fp = fopen("product.txt","rt"); // Read 버전으로 파일 오픈
+        if (fp == NULL) { // 파일이 비어있는 경우
+                printf("=> 파일 없음!\n");
+                return 0;
+         }
+        for (; count<100; count++) { // 파일 비어있지 않은 경우 포인터배열 선언한 개수만큼 for>문 돌리기
+                fscanf(fp, "%d %d %s", &p[count].weight, &p[count].price, p[count].name);
+          if (feof(fp)) break; // 파일의 끝을 만나면 break
+          }
+        fclose(fp); // 파일 닫기
+        printf("=> 로딩 성공!\n");
+        return count; // 읽은 데이터 개수 리턴하기
 }
+
